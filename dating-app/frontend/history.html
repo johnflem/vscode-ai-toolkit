@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Your Interaction History</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Match</th>
+                    <th>Conversation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- History records will be dynamically inserted here -->
+            </tbody>
+        </table>
+        <a href="conversations.html" class="btn btn-primary">Go to Conversations</a>
+        <a href="matches.html" class="btn btn-secondary">View Matches</a>
+        <h2 class="mt-5">History</h2>
+        <div id="historyList">
+            <!-- History will be loaded here -->
+        </div>
+    </div>
+    <script src="js/scripts.js"></script>
+    <script>
+    function loadHistory() {
+        fetch('/history')
+            .then(response => response.json())
+            .then(data => {
+                const historyList = document.getElementById('historyList');
+                historyList.innerHTML = '';
+                data.forEach(history => {
+                    const historyItem = document.createElement('div');
+                    historyItem.textContent = `Action: ${history.action}`;
+                    historyList.appendChild(historyItem);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    document.addEventListener('DOMContentLoaded', loadHistory);
+    </script>
+</body>
+</html>

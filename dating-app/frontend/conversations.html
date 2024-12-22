@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversations</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Conversations</h1>
+        <h2 class="mt-5">Conversations</h2>
+        <div id="conversationsList">
+            <!-- Conversations will be loaded here -->
+        </div>
+        <div id="conversation-list">
+            <!-- List of conversations will be dynamically populated here -->
+        </div>
+        <div id="message-area">
+            <h2>Chat</h2>
+            <div id="messages">
+                <!-- Messages will be displayed here -->
+            </div>
+            <textarea id="message-input" placeholder="Type your message..."></textarea>
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+    <script src="js/scripts.js"></script>
+    <script>
+        function loadConversations() {
+            fetch('/conversations')
+                .then(response => response.json())
+                .then(data => {
+                    const conversationsList = document.getElementById('conversationsList');
+                    conversationsList.innerHTML = '';
+                    data.forEach(conversation => {
+                        const conversationItem = document.createElement('div');
+                        conversationItem.textContent = `Message: ${conversation.message}`;
+                        conversationsList.appendChild(conversationItem);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', loadConversations);
+    </script>
+</body>
+</html>

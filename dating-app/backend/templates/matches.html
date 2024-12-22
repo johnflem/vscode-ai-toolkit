@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matches</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Your Matches</h1>
+        <div id="matches-list">
+            {% if matches %}
+                <ul>
+                    {% for match in matches %}
+                        <li>
+                            <h2>{{ match.username }}</h2>
+                            <p>Age: {{ match.age }}</p>
+                            <p>Preferences: {{ match.preferences }}</p>
+                            <a href="{{ url_for('conversations.start', match_id=match.id) }}">Start Conversation</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No matches found. Please update your preferences.</p>
+            {% endif %}
+        </div>
+        <a href="{{ url_for('preferences') }}">Update Preferences</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>

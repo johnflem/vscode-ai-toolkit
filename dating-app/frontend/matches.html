@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matches</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Your Matches</h1>
+        <h2 class="mt-5">Matches</h2>
+        <div id="matchesList">
+            <!-- Matches will be loaded here -->
+        </div>
+        <a href="conversations.html" class="btn btn-primary">Go to Conversations</a>
+        <a href="preferences.html" class="btn btn-secondary">Update Preferences</a>
+    </div>
+    <script src="js/scripts.js"></script>
+    <script>
+        function loadMatches() {
+            fetch('/matches')
+                .then(response => response.json())
+                .then(data => {
+                    const matchesList = document.getElementById('matchesList');
+                    matchesList.innerHTML = '';
+                    data.forEach(match => {
+                        const matchItem = document.createElement('div');
+                        matchItem.textContent = `Match: ${match.username}`;
+                        matchesList.appendChild(matchItem);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', loadMatches);
+    </script>
+</body>
+</html>
